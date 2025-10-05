@@ -1,0 +1,75 @@
+.cuerpo{
+    background: radial-gradient(circle, #87CEEB ,1%, #ffffff);
+    font-family: Arial, sans-serif;
+    color: rgba(58, 56, 56, 0.907);
+    display: grid;
+    height: 95vh;
+    justify-content: center;
+    align-items: center;
+} 
+
+#titulo{
+    font-weight: bold;
+    text-align: center;
+    font-size: 25px;
+}
+
+#logo{
+    display: block;
+    margin: auto;
+    height: 80px;
+}
+
+section{
+    padding: 15px;
+}
+ 
+#encabezado{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+input{
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: 2px solid #ccc;
+    box-sizing: border-box;
+}
+
+input:focus{
+    border-color: #00638a;
+    outline: none;
+}
+
+#icon{
+    width: 15px;
+    height: 15px;
+    margin-right: 10px;
+}
+
+#user{
+    display: flex;
+    flex-direction: row;
+}
+
+
+.articulo{
+    background-color: #ffffff;
+    border-radius: 0.6em;
+    box-shadow: 0 0 1em rgba(0, 0, 0, 0.1);
+}
+
+#button{
+    background-color: #00638a;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-top: 10px;
+}
+
+#button:hover{
+    background-color: #004f6b;
+}
