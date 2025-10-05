@@ -2,10 +2,10 @@
 :root {
   --bg: #f9faff;
   --card: #ffffff;
-  --text: #1f2937;
+  --text: #000000;
   --muted: #6b7280;
-  --border: #e5e7eb;
-  --primary: #2563eb;   
+  --border: #ffffff;
+  --primary: #000000;   
   --primary-50: #eff6ff;
   --shadow: 0 10px 24px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0,0,0,.06);
   --radius-lg: 16px;
@@ -88,7 +88,7 @@ body {
 
 button {
   border: none;
-  background:#000000;
+  background:#ffffff;
   font: inherit;
   color: inherit;
   cursor: pointer;
@@ -102,12 +102,16 @@ button {
   padding: 10px 14px;
   border-radius: 10px;
   
-  color: #fff;
+  color: #000000;
   box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+  
+}
+.icon-upload {
+  filter:grayscale(1) invert(1);
 }
 
 .btn-ghost {
-  padding: px;
+  padding: 3px;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   background: var(--bg);
@@ -125,16 +129,7 @@ button {
 }
 
 
-.icon-upload {
-  width: 16px;
-  height: 16px;
-  display: inline-block;
-  background: currentColor;
-  mask-size: cover;
-  -webkit-mask-size: cover;
-}
-/* Simple masks (optional if images already used)*/
-.icon-upload { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M5 20h14v-2H5v2zm7-16-5 5h3v4h4v-4h3l-5-5z"/></svg>'); }
+
 
 
 .toolbar {
