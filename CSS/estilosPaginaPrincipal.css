@@ -1,0 +1,253 @@
+
+:root {
+  --bg: #f9faff;
+  --card: #ffffff;
+  --text: #1f2937;
+  --muted: #6b7280;
+  --border: #e5e7eb;
+  --primary: #2563eb;   
+  --primary-50: #eff6ff;
+  --shadow: 0 10px 24px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0,0,0,.06);
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 10px;
+}
+
+
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+.topbar {
+  height: 64px;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.topbar_left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.header_text {
+  display: grid;
+  gap: 1px;
+}
+
+.header_title {
+  font-size: 18px;
+  margin: 0;
+  font-weight: 700;
+  letter-spacing: .2px;
+}
+
+.header_subtitle {
+  margin: 0;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.topbar_right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-mini {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: 10px;
+}
+
+
+
+.user-mini_data {
+  display: grid;
+  line-height: 1.1;
+}
+
+.user-mini_name {
+  font-weight: 600;
+  font-size: 13px;
+}
+
+
+
+button {
+  border: none;
+  background:#000000;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  
+  color: #fff;
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.25);
+}
+
+.btn-ghost {
+  padding: px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  background: var(--bg);
+}
+
+
+.btn-icon {
+  width: 34px;
+  height: 34px;
+  display: inline-grid;
+  place-items: center;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+}
+
+
+.icon-upload {
+  width: 16px;
+  height: 16px;
+  display: inline-block;
+  background: currentColor;
+  mask-size: cover;
+  -webkit-mask-size: cover;
+}
+/* Simple masks (optional if images already used)*/
+.icon-upload { mask-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M5 20h14v-2H5v2zm7-16-5 5h3v4h4v-4h3l-5-5z"/></svg>'); }
+
+
+.toolbar {
+  max-width: 1100px;
+  margin: 18px auto;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+
+#search-form select {
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  padding: 0 12px;
+  background: #fff;
+  color: var(--text);
+  outline: none;
+}
+
+
+main {
+  max-width: 1100px;
+  margin: 0 auto 40px;
+  padding: 0 12px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+ 
+}
+
+.card_header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 18px;
+  border-bottom: 1px solid var(--border);
+}
+
+.card_header h2 {
+  margin: 0;
+  font-size: 16px;
+}
+
+
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+}
+
+
+.table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 10px; 
+}
+
+.table thead th {
+  font-weight: 600;
+  text-align: left;
+  padding: 10px 14px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.table tbody tr {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  box-shadow: 0 2px 6px rgba(0,0,0,.03);
+}
+
+.table tbody tr .cell-file,
+.table tbody tr .cell-date,
+.table tbody tr .cell-user,
+.table tbody tr .cell-actions {
+  padding: 12px 15px;
+
+  text-align: left;
+}
+.table tbody tr .cell-file {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.file-meta { display: grid; gap: 2px; }
+.file-name { font-weight: 600; }
+.file-size { font-size: 12px; color: var(--muted); }
+
+.cell-date time {
+  font-size: 13px;
+  
+}
+
+.col--acciones, .cell-actions {
+  text-align: left;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+
+.table { border-collapse: separate; border-spacing: 1px; }
+.table thead { display: table-header-group; }
+.table tbody tr { display: table-row; }
+.table tbody td { display: table-cell; 
+}
+
+
