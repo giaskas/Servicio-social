@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../CSS/styles_login.css">
+    <title>Inicio de Sesion</title>
+</head>
+<body class="cuerpo">
+    <img id="logo" src="../Icons/logoUaq.png" alt="Logo">
+    <article>
+        <label id = "titulo">Sistema de gestion de archivos</label>
+    </article>
+    <article class="articulo">
+        <section>
+            <section id = "encabezado">
+                <label><b>Iniciar Sesion</b></label><br>
+                <label> Ingresa tus credenciales</label>
+            </section>
+
+            <form action="../PHP/login.php" method="POST" autocomplete="off">
+                <section>
+                    <div id="user">
+                        <img id="icon" src="../Icons/user.png">
+                        <label class = "etiqueta">Usuario</label>
+                    </div>
+                    <input name="usuario" placeholder="Usuario" type="text">
+                </section>
+
+                <section id="password">
+                    <div id="user">
+                        <img id="icon" src="../Icons/lock.png">
+                        <label class = "etiqueta">Contraseña</label>
+                    </div>
+                    <input name="contrasena" type="password" placeholder="Contraseña">
+                </section>
+
+                <section>
+                    <input id="button" type="submit" value="Iniciar" >
+                </section>
+                
+        </section>
+    </article>
+</body>
+</body>
+</html>
