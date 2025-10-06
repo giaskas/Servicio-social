@@ -21,6 +21,8 @@ body {
   color: var(--text);
   font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
 }
+button:hover { background-color: #f4f4f4; }
+button:active { transform: translateY(1px); }
 
 .topbar {
   height: 64px;
@@ -123,7 +125,6 @@ button {
 .img-logout {
   padding: 3px;
   border-radius: 5px;
-
   background: var(--bg);
 }
 
@@ -150,6 +151,120 @@ button {
   align-items: center;
   justify-content: space-between;
 }
+
+
+.busqueda-archivos {
+  position: absolute;
+  inset: 0;             
+  margin: auto;
+  width: min(700px, 92vw);
+  height: min(400px, 78vh);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 24px 60px rgba(0,0,0,.18), 0 4px 10px rgba(0,0,0,.08);
+  padding:10px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;  
+}
+.open.busqueda-archivos { visibility: visible; } 
+.uploader {
+  width: min(680px, 100%);
+  text-align: center;
+}
+
+.uploader__title {
+  margin: 0 0 16px;
+  font: 600 20px/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: #111827;
+}
+
+.uploader__drop {
+  border: 2px dashed #e5e7eb;
+  background: #fafafa;
+  border-radius: 14px;
+  padding: 48px 24px;
+  display: grid;
+  justify-items: center;
+  gap: 16px;
+}
+
+.uploader__drop.is-dragover {
+  background: #f0f7ff;
+  border-color: #93c5fd;
+  transform: translateY(-1px);
+}
+.btn-archivo {
+
+
+  padding: 10px 16px;
+  border-radius: 10px;
+  border: 1px solid #ffffff;
+  background: #111827;
+  color: #fff;
+  font: 500 14px/1 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  box-shadow: 0 6px 14px rgba(0,0,0,.12);
+  user-select: none;
+}
+.btn-archivo:hover { background: #0f172a; }
+.btn-archivo:active { transform: translateY(1px); }
+
+.uploader__hint {
+  margin: 4px 0 0;
+  font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: #6b7280;
+}
+
+.uploader__names {
+  margin-top: 16px;
+  font: 14px/1.4 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
+  color: #374151;
+  padding: .75rem .9rem;
+  border-radius: 10px;
+  background: #fafafa;
+  min-height: 2.4rem;
+  text-align: left;
+}
+
+
+.boton:hover { background: #2877c7; }
+.boton:active { transform: translateY(1px); }
+.uploader__close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.btn-subir {
+  background-color: #1c0aa3;
+  color: #ffffff;
+  border-color: #000000;
+  border-radius: 10px;
+  padding: 5px 16px;
+
+}
+.btn-subir[disabled] {
+  opacity: .5;
+  background-color: red;
+  cursor: not-allowed;
+}
+.uploader__actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 16px;
+}
+
+.file-input {
+  position: absolute !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+  pointer-events: none !important;
+}
+
+html, body { height: 100%; }
 
 
 #search-form select {

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sistema de Gestión de Archivos - UAQ</title>
     <link rel="stylesheet" href="../CSS/estilosPaginaPrincipal.css" />
+    <script src="./js/subida-archivo.js" defer></script>
   </head>
   <body>
     <header class="topbar" role="banner">
@@ -30,7 +31,8 @@
         </button>
       </div>
     </header>
-
+    
+    
     <section class="toolbar" aria-label="Acciones principales">
       <div class="toolbar_left">
         <button class="btn-primary" id="upload" type="button">
@@ -38,7 +40,18 @@
           <span>Subir archivo</span>
         </button>
       </div>
+      <section class="busqueda-archivos">
+          <h1 id="generacion-pdf">Generacion de PDF</h1>
+          <form action="subir.php" method="POST" enctype="multipart/form-data">
+              <div id="file-names"></div>
 
+              <input id="file-input" type="file" name="archivo" required>
+              <label for="file-input" class="btn-archivo">Seleccionar archivo</label>
+              
+              <button id="btn-subir" type="submit">Subir</button>
+
+            </form>
+      </section>
       <form class="toolbar_right" id="search-form" role="search">
 
         <label for="ordenar" >Ordenar por</label>
