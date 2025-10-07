@@ -62,16 +62,23 @@ button:active { transform: translateY(1px); }
 }
 
 .topbar_right {
-  display: flex;
+   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 16px;
+}
+
+.user-mini_avatar {
+  width: 20px;
+  height: 20px;
+  object-fit: cover;
+  margin-right: 10px;
 }
 
 .user-mini {
   display: grid;
   grid-template-columns: auto 1fr;
   align-items: center;
-  gap: 10px;
+
 }
 
 
@@ -83,10 +90,8 @@ button:active { transform: translateY(1px); }
 
 .user-mini_name {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
 }
-
-
 
 button {
   border: none;
@@ -94,7 +99,7 @@ button {
   font: inherit;
   color: inherit;
   cursor: pointer;
-  
+
 }
 
 .btn-primary {
@@ -120,15 +125,12 @@ button {
   border-radius: 10px;
   color: #000000;
   box-shadow: 0 9px 14px rgba(186, 185, 185, 0.25);
-  
 }
 .img-logout {
   padding: 3px;
   border-radius: 5px;
   background: var(--bg);
 }
-
-
 .btn-icon {
   width: 34px;
   height: 34px;
@@ -138,11 +140,6 @@ button {
   border: 1px solid var(--border);
   border-radius: 10px;
 }
-
-
-
-
-
 .toolbar {
   max-width: 1100px;
   margin: 18px auto;
@@ -151,8 +148,6 @@ button {
   align-items: center;
   justify-content: space-between;
 }
-
-
 .busqueda-archivos {
   position: absolute;
   inset: 0;             
@@ -172,13 +167,11 @@ button {
   width: min(680px, 100%);
   text-align: center;
 }
-
 .uploader__title {
   margin: 0 0 16px;
   font: 600 20px/1.2 ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto;
   color: #111827;
 }
-
 .uploader__drop {
   border: 2px dashed #e5e7eb;
   background: #fafafa;
@@ -188,7 +181,6 @@ button {
   justify-items: center;
   gap: 16px;
 }
-
 .uploader__drop.is-dragover {
   background: #f0f7ff;
   border-color: #93c5fd;
@@ -227,7 +219,7 @@ button {
 }
 
 
-.boton:hover { background: #2877c7; }
+.boton:hover { background: #0080ff; }
 .boton:active { transform: translateY(1px); }
 .uploader__close {
   position: absolute;
@@ -236,9 +228,14 @@ button {
   background: transparent;
   border: none;
   cursor: pointer;
+  border-radius: 100%;
+  padding: 7px 7px;
+  display: grid;
+  place-items: center;
+
 }
 .btn-subir {
-  background-color: #1c0aa3;
+  background-color: #000000;
   color: #ffffff;
   border-color: #000000;
   border-radius: 10px;
@@ -246,11 +243,13 @@ button {
 
 }
 .btn-subir[disabled] {
-  opacity: .5;
-  background-color: red;
+  opacity: 1;
+  background-color: rgb(0, 0, 0);
   cursor: not-allowed;
 }
+.btn-subir[disabled]:hover { background-color: #f92e00; opacity: .5; }
 .uploader__actions {
+  
   display: flex;
   justify-content: flex-end;
   margin-top: 16px;
@@ -338,10 +337,9 @@ main {
 .table tbody tr .cell-user,
 .table tbody tr .cell-actions {
   padding: 12px 15px;
-
   text-align: left;
 }
-.table tbody tr .cell-file {
+.table tbody tr .cell-file{
   width: 50%;
   display: flex;
   align-items: center;
@@ -354,7 +352,7 @@ main {
 
 .cell-date time {
   font-size: 13px;
-  
+
 }
 
 .col--acciones, .cell-actions {

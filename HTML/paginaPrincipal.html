@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Sistema de Gestión de Archivos - UAQ</title>
     <link rel="stylesheet" href="../CSS/estilosPaginaPrincipal.css" />
-    <script src="./js/subida-archivo.js" defer></script>
+    <script src="../JS/funciones.js" defer></script>
   </head>
   <body>
     <header class="topbar" role="banner">
@@ -23,35 +23,63 @@
           <div class="user-mini_data">
             <span class="user-mini_name">Dr. María González</span>
             <span class="user-mini_role">Administrador</span>
+
           </div>
         </div>
-        <button class="btn-logout" id="logout" type="button">
+         <button class="btn-logout" id="logout" type="button">
           <span>Cerrar sesión</span>
           <img class="img-logout" id="logout" type="button" src="../Icons/logout.png" alt="Cerrar sesión" width="20"/>
-        </button>
+      </div>
+       
+      </div>
       </div>
     </header>
     
     
     <section class="toolbar" aria-label="Acciones principales">
       <div class="toolbar_left">
-        <button class="btn-primary" id="upload" type="button">
-          <img src="../Icons/upload.png" id="icon-upload" alt="Subir archivo" width="20" height="20" />
-          <span>Subir archivo</span>
+            <button class="btn-primary" onclick="abrirVentanaUploader()" id="upload" type="button">
+            <img src="../Icons/upload.png" id="icon-upload" alt="Subir archivo" width="20" height="20" />
+            <span>Subir archivo</span>
         </button>
+        </div>
+      
       </div>
-      <section class="busqueda-archivos">
-          <h1 id="generacion-pdf">Generacion de PDF</h1>
-          <form action="subir.php" method="POST" enctype="multipart/form-data">
-              <div id="file-names"></div>
+      <script>
+        function abrirVentanaUploader() {
+          const uploaderSection = document.querySelector('.busqueda-archivos');
+          uploaderSection.classList.add('open');
+        }
+        function cerrarVentanaUploader() {
+          const uploaderSection = document.querySelector('.busqueda-archivos');
+          uploaderSection.classList.remove('open');
+        }
+        
+      </script>
+      <section class="busqueda-archivos" role="dialog" aria-labelledby="titulo-uploader">
+        <div class="uploader">
+          <h1 class="uploader__title" id="titulo-uploader">Abrir un archivo</h1>
+          <button class="uploader__close" id="close-uploader" aria-label="Cerrar ventana de subida de archivos" onclick="cerrarVentanaUploader()">
+            <img src="../Icons/cross.png" alt="Cerrar" width="15" height="15"/>
+          </button>
+          <div id="dropzone" class="uploader__drop">
+            <input id="file-input" class="file-input" type="file" name="archivo" accept=".xlsx, .xls, .csv" required />
 
-              <input id="file-input" type="file" name="archivo" required>
-              <label for="file-input" class="btn-archivo">Seleccionar archivo</label>
-              
-              <button id="btn-subir" type="submit">Subir</button>
+            <div id="file-names" class="uploader__names">No se ha seleccionado ningún archivo</div>
 
-            </form>
+            <label for="file-input" class="btn-archivo" id="btn-examinar">Examinar</label>
+
+            <p class="uploader__hint">o arrastra aquí un archivo</p>
+          </div>
+
+        
+          <form action="subirArchivo.php" method="POST" enctype="multipart/form-data" class="uploader__actions">
+            <button id="btn-subir" type="submit" class="boton btn-subir" disabled>Generar PDF</button>
+          </form>
+        </div>
       </section>
+
+
       <form class="toolbar_right" id="search-form" role="search">
 
         <label for="ordenar" >Ordenar por</label>
@@ -161,8 +189,10 @@
           <span class="user-name"></span>
         </td>
         <td class="cell-actions">
+          <div id="boton">
           <button class="btn-icon" data-action="preview" aria-label="Ver archivo"><span class="icon-eye" aria-hidden="true"></span></button>
           <button class="btn-icon" data-action="download" aria-label="Descargar archivo"><img src="../Icons/download.png" alt="Descargar"></button>
+          </div>
         </td>
       </tr>
     </template>
