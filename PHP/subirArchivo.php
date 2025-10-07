@@ -11,8 +11,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $allowedfileExtensions = ['xlsx', 'xls', 'csv'];
         if (in_array($fileExtension, $allowedfileExtensions)) {
             //vendor/autoload.php es el archivo que carga todas las librerías instaladas con Composer
-
+            //aqui viene como la de PhpSpreadsheet como FPDI
+            //peroo ocupamos descargar unas cosas primero para que funcione y yo ya zzzzzzzz
             require 'vendor/autoload.php';
+
             //fileTmpPath es la ruta temporal del archivo subido
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fileTmpPath);
             
