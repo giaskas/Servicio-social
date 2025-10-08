@@ -2,18 +2,19 @@
 include '../PHP/conexion.php';
 $nombre = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
-$consulta = "SELECT id, contrasena FROM usuarios WHERE nombre = ?";
+$consulta = "SELECT IdUsuario, ContrasenaConHash FROM usuarios WHERE Nombre = ?";
 $resultado = $conexion->prepare($consulta);
 if ($resultado) {
     $resultado->bind_param("s", $nombre);
     $resultado->execute();
     $resultado = $resultado->get_result();
-    if ($resultado->num_rows > 0) {
-        $fila = $resultado->fetch_assoc();
-        $hash_almacenado = $fila['contrasena'];
+    if ($resultado->num_rows === 1) {
+        $fila = $resultado->fetch_assoc();  
+        $hash_almacenado = $fila['ContrasenaConHash'];
+        $hash_ingresado = md5($contrasena);
 
-        if (password_verify($contrasena, $hash_almacenado)) {
-          
+        if ($hash_ingresado === $hash_almacenado) {
+
             header("Location: ../HTML/paginaPrincipal.html");
             exit(); 
         } else {
@@ -30,6 +31,7 @@ if ($resultado) {
 
     $resultado->close();
 } else {
+  
     $error = urlencode("Error en el sistema, por favor intente más tarde.");
     header("Location: ../HTML/login.html?error=" . $error);
     exit();

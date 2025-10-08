@@ -54,29 +54,29 @@
           const uploaderSection = document.querySelector('.busqueda-archivos');
           uploaderSection.classList.remove('open');
         }
-        
       </script>
       <section class="busqueda-archivos" role="dialog" aria-labelledby="titulo-uploader">
-        <div class="uploader">
-          <h1 class="uploader__title" id="titulo-uploader">Abrir un archivo</h1>
-          <button class="uploader__close" id="close-uploader" aria-label="Cerrar ventana de subida de archivos" onclick="cerrarVentanaUploader()">
-            <img src="../Icons/cross.png" alt="Cerrar" width="15" height="15"/>
-          </button>
-          <div id="dropzone" class="uploader__drop">
-            <input id="file-input" class="file-input" type="file" name="archivo" accept=".xlsx, .xls, .csv" required />
+          <div class="uploader">
+              <h1 class="uploader__title" id="titulo-uploader">Abrir un archivo</h1>
+              <button class="uploader__close" id="close-uploader" aria-label="Cerrar ventana de subida de archivos" onclick="cerrarVentanaUploader()">
+                  <img src="../Icons/cross.png" alt="Cerrar" width="15" height="15"/>
+              </button>
+              
+              <form action="../PHP/subirArchivo.php" method="POST" enctype="multipart/form-data">
 
-            <div id="file-names" class="uploader__names">No se ha seleccionado ningún archivo</div>
+                  <div id="dropzone" class="uploader__drop">
+                      <input id="file-input" class="file-input" type="file" name="archivo" accept=".xlsx, .xls, .csv" required />
+                      <div id="file-names" class="uploader__names">No se ha seleccionado ningún archivo</div>
+                      <label for="file-input" class="btn-archivo" id="btn-examinar">Examinar</label>
+                      <p class="uploader__hint">o arrastra aquí un archivo</p>
+                  </div>
+          
+                  <div class="uploader__actions">
+                      <button id="btn-subir" type="submit" class="boton btn-subir" disabled>Generar PDF</button>
+                  </div>
 
-            <label for="file-input" class="btn-archivo" id="btn-examinar">Examinar</label>
-
-            <p class="uploader__hint">o arrastra aquí un archivo</p>
-          </div>
-
-        
-          <form action="subirArchivo.php" method="POST" enctype="multipart/form-data" class="uploader__actions">
-            <button id="btn-subir" type="submit" class="boton btn-subir" disabled>Generar PDF</button>
-          </form>
-        </div>
+              </form>
+              </div>
       </section>
 
 

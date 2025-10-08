@@ -2,7 +2,8 @@ Crear Tabla usuarios
 
 CREATE TABLE usuarios (
     IdUsuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Contrasena VARCHAR(255)
+    Nombre VARCHAR(255) NOT NULL
+    ContrasenaConHash VARCHAR(255) NOT NULL
 );
 
 Crear Tabla archivos 

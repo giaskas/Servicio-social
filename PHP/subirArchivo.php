@@ -13,8 +13,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //vendor/autoload.php es el archivo que carga todas las librerías instaladas con Composer
             //aqui viene como la de PhpSpreadsheet como FPDI
             //peroo ocupamos descargar unas cosas primero para que funcione y yo ya zzzzzzzz
-            require 'vendor/autoload.php';
-
+            require('../vendor/autoload.php');
             //fileTmpPath es la ruta temporal del archivo subido
             $spreadsheet = \PhpOffice\PhpSpreadsheet\IOFactory::load($fileTmpPath);
             
@@ -26,12 +25,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //se usa FPDI para generar una plantilla de PDF y luego se rellena con los datos extraidos del array del Excel
 
         } else {
-            echo "Tipo de archivo no permitido. Solo se permiten archivos XLSX, XLS y CSV.";
+            $error = urlencode("Tipo de archivo no permitido. Solo se permiten archivos XLSX, XLS y CSV.");
+            header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+            exit();
         }
     } else {
-        echo "Error en la subida del archivo. Código de error: " . $_FILES['archivo']['error'];
+        $error = urlencode("Error al subir el archivo. Código de error: " . $_FILES['archivo']['error']);
+        header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+        exit();
     }
 } else {
-    echo "Método de solicitud no válido.";
+    $error = urlencode("Método de solicitud no permitido.");
+    header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+    exit();
 }
+
 ?>

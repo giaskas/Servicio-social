@@ -25,7 +25,7 @@
                         <img id="icon" src="../Icons/user.png">
                         <label class = "etiqueta">Usuario</label>
                     </div>
-                    <input name="usuario" placeholder="Usuario" type="text">
+                    <input name="usuario" placeholder="Usuario" type="text" required>
                 </section>
 
                 <section id="password">
@@ -33,38 +33,41 @@
                         <img id="icon" src="../Icons/lock.png">
                         <label class = "etiqueta">Contraseña</label>
                     </div>
-                    <input name="contrasena" type="password" placeholder="Contraseña">
+                    <input name="contrasena" type="password" placeholder="Contraseña" required>
                 </section>
 
                 <section>
                     <input id="button" type="submit" value="Iniciar" >
                 </section>
-                            <section class="mensaje-error">
-                <section class="mensaje">
-                    <p>Error: Usuario o contraseña incorrectos.</p>
-                    <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
-                        <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
-                    </button>
-                    <script>
-                        const urlParams = new URLSearchParams(window.location.search);
-                        const error = urlParams.get('error');
-
-
-                        if (error) {
-                            const uploaderSection = document.querySelector('.mensaje-error');
-                            uploaderSection.classList.add('open');
-                        }
-                        function cerrarVentana() {
-                            const uploaderSection = document.querySelector('.mensaje-error');
-                            uploaderSection.classList.remove('open');
-                        }
-                        
-                    </script>
-                      
-            </section>
                 
-        </section>
+                <section class="mensaje-error">
+                    <section class="mensaje">
+                        <p id="texto-error"></p>
+                        
+                        <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
+                            <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
+                        </button>
+                        <script>
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const error = urlParams.get('error');
+                            const mensajeError = document.querySelector('.mensaje-error');
+
+                            // PASO 2: Lógica modificada
+                            if (error) {
+                                const pElementoError = document.getElementById('texto-error');
+                                
+                                pElementoError.textContent = decodeURIComponent(error);
+
+                                mensajeError.classList.add('open');
+                            }
+                            
+                            function cerrarVentana() {
+                                mensajeError.classList.remove('open');
+                            }
+                        </script>
+                    </section>
+                </section>
+            </form> </section>
     </article>
-</body>
 </body>
 </html>
