@@ -18,6 +18,7 @@
                 <label> Ingresa tus credenciales</label>
             </section>
 
+            
             <form action="../PHP/login.php" method="POST" autocomplete="off">
                 <section>
                     <div id="user">
@@ -38,6 +39,29 @@
                 <section>
                     <input id="button" type="submit" value="Iniciar" >
                 </section>
+                            <section class="mensaje-error">
+                <section class="mensaje">
+                    <p>Error: Usuario o contraseña incorrectos.</p>
+                    <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
+                        <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
+                    </button>
+                    <script>
+                        const urlParams = new URLSearchParams(window.location.search);
+                        const error = urlParams.get('error');
+
+
+                        if (error) {
+                            const uploaderSection = document.querySelector('.mensaje-error');
+                            uploaderSection.classList.add('open');
+                        }
+                        function cerrarVentana() {
+                            const uploaderSection = document.querySelector('.mensaje-error');
+                            uploaderSection.classList.remove('open');
+                        }
+                        
+                    </script>
+                      
+            </section>
                 
         </section>
     </article>

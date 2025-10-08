@@ -1,34 +1,39 @@
 <?php
-    include '../PHP/conexion.php';
-
-    $nombre = $_POST['usuario'];
-    $contrasena = $_POST['contrasena'];
-
-    $consulta = "SELECT contrasena FROM usuarios WHERE nombre= '$nombre'";
-    $resultado = $conexion->query($consulta);
-
-    if( $resultado->num_rows > 0) {
+include '../PHP/conexion.php';
+$nombre = $_POST['usuario'];
+$contrasena = $_POST['contrasena'];
+$consulta = "SELECT id, contrasena FROM usuarios WHERE nombre = ?";
+$resultado = $conexion->prepare($consulta);
+if ($resultado) {
+    $resultado->bind_param("s", $nombre);
+    $resultado->execute();
+    $resultado = $resultado->get_result();
+    if ($resultado->num_rows > 0) {
         $fila = $resultado->fetch_assoc();
-        $contrasena_almacenada = $fila['contrasena'];
+        $hash_almacenado = $fila['contrasena'];
 
-
-        //verificamos la contrasena
-        if($contrasena == $contrasena_almacenada) {
-            echo 'Inicio de sesion exitoso';
+        if (password_verify($contrasena, $hash_almacenado)) {
+          
             header("Location: ../HTML/paginaPrincipal.html");
-            exit();
+            exit(); 
         } else {
-            echo "<script>
-                alert('Contraseña incorrecta');
-                window.location.href = '../HTML/login.html';
-                </script>";   
+           
+            $error = urlencode("Contraseña incorrecta");
+            header("Location: ../HTML/login.html?error=" . $error);
+            exit();
         }
-    }else{
-        echo "<script>
-            alert('Usuario incorrecto');
-            window.location.href = '../HTML/login.html';
-            </script>";   
+    } else {
+        $error = urlencode("El usuario no existe");
+        header("Location: ../HTML/login.html?error=" . $error);
+        exit();
     }
 
-    $conexion->close();
+    $resultado->close();
+} else {
+    $error = urlencode("Error en el sistema, por favor intente más tarde.");
+    header("Location: ../HTML/login.html?error=" . $error);
+    exit();
+}
+
+$conexion->close();
 ?>

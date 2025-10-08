@@ -73,3 +73,40 @@ input:focus{
 #button:hover{
     background-color: #004f6b;
 }
+
+.mensaje-error{
+  position: absolute;
+  inset: 0;             
+  margin: auto;
+  width: min(250px, 92vw);
+  height: min(100px, 50vh);
+  background: #ffd2d2;
+  border-radius: 16px;
+  border: 2px solid rgb(228, 140, 140);
+  box-shadow: 0 24px 60px rgba(152, 135, 135, 0.18), 0 4px 10px rgba(0,0,0,.08);
+  padding:10px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;  
+}
+.open.mensaje-error{
+  visibility: visible;
+}
+.btn-cerrar {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 100%;
+  padding: 7px 7px;
+  display: grid;
+  place-items: center;
+
+}
+.mensaje-error p{
+    color: #d77371;
+    font-weight: bold;
+    text-align: center;
+}
