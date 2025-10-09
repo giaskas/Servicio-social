@@ -80,9 +80,9 @@ input:focus{
   margin: auto;
   width: min(250px, 92vw);
   height: min(100px, 50vh);
-  background: #ffd2d2;
+  background: #fcebeb;
   border-radius: 16px;
-  border: 2px solid rgb(228, 140, 140);
+  border: 2px solid rgba(237, 126, 126, 0.183);
   box-shadow: 0 24px 60px rgba(152, 135, 135, 0.18), 0 4px 10px rgba(0,0,0,.08);
   padding:10px;
   display: grid;
@@ -106,7 +106,7 @@ input:focus{
 
 }
 .mensaje-error p{
-    color: #d77371;
+    color: #000000;
     font-weight: bold;
     text-align: center;
 }
