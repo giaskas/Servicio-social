@@ -129,7 +129,7 @@ button {
 .img-logout {
   padding: 3px;
   border-radius: 5px;
-  background: var(--bg);
+  background:transparent;
 }
 .btn-icon {
   width: 34px;
@@ -368,3 +368,40 @@ main {
 .table tbody td { display: table-cell; 
 }
 
+
+.mensaje-error{
+  position: absolute;
+  inset: 0;             
+  margin: auto;
+  width: min(250px, 92vw);
+  height: min(100px, 50vh);
+  background: #fcebeb;
+  border-radius: 16px;
+  border: 2px solid rgba(237, 126, 126, 0.183);
+  box-shadow: 0 24px 60px rgba(152, 135, 135, 0.18), 0 4px 10px rgba(0,0,0,.08);
+  padding:10px;
+  display: grid;
+  place-items: center;
+  visibility: hidden;  
+}
+.open.mensaje-error{
+  visibility: visible;
+}
+.btn-cerrar {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  border-radius: 100%;
+  padding: 7px 7px;
+  display: grid;
+  place-items: center;
+
+}
+.mensaje-error p{
+    color: #000000;
+    font-weight: bold;
+    text-align: center;
+}

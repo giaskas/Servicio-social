@@ -28,7 +28,7 @@
         </div>
         <form action="../PHP/cerrarSesion.php" method="POST">
           <button class="btn-logout" id="logout" type="submit">
-            <span>Cerrar sesión</span>
+            
             <img class="img-logout" id="logout" type="button" src="../Icons/logout.png" alt="Cerrar sesión" width="20"/>
           </button>
         </form>
@@ -82,7 +82,34 @@
               </div>
       </section>
 
+                <section class="mensaje-error">
+                    <section class="mensaje">
+                        <p id="texto-error"></p>
+                        
+                        <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
+                            <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
+                        </button>
+                        <script>
+                            const urlParams = new URLSearchParams(window.location.search);
+                            const error = urlParams.get('error');
+                            const url= window.location.href.split('?')[0];
+                            const mensajeError = document.querySelector('.mensaje-error');
+                            if (error) {
+                                const pElementoError = document.getElementById('texto-error');
+                                
+                                pElementoError.textContent = decodeURIComponent(error);
 
+                                mensajeError.classList.add('open');
+                            }
+                            
+                            function cerrarVentana() {
+                                window.history.replaceState({}, document.title, url);
+
+                                mensajeError.classList.remove('open');
+                            }
+                        </script>
+                    </section>
+                </section>
       <form class="toolbar_right" id="search-form" role="search">
 
         <label for="ordenar" >Ordenar por</label>

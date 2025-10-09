@@ -49,6 +49,8 @@
                         </button>
                         <script>
                             const urlParams = new URLSearchParams(window.location.search);
+                            const url= window.location.href.split('?')[0];
+
                             const error = urlParams.get('error');
                             const mensajeError = document.querySelector('.mensaje-error');
 
@@ -62,6 +64,7 @@
                             }
                             
                             function cerrarVentana() {
+                                window.history.replaceState({}, document.title, url);
                                 mensajeError.classList.remove('open');
                             }
                         </script>

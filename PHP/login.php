@@ -14,7 +14,9 @@ if ($resultado) {
         $hash_ingresado = md5($contrasena);
 
         if ($hash_ingresado === $hash_almacenado) {
-
+            session_start();
+            $_SESSION['usuario'] = $nombre;
+            session_regenerate_id(true);
             header("Location: ../HTML/paginaPrincipal.html");
             exit(); 
         } else {
