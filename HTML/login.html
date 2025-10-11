@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../CSS/styles_login.css">
+    <script src="../JS/alertas.js" defer></script>
     <title>Inicio de Sesion</title>
 </head>
 <body class="cuerpo">
@@ -11,6 +12,7 @@
     <article>
         <label id = "titulo">Sistema de gestion de archivos</label>
     </article>
+    
     <article class="articulo">
         <section>
             <section id = "encabezado">
@@ -47,27 +49,6 @@
                         <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
                             <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
                         </button>
-                        <script>
-                            const urlParams = new URLSearchParams(window.location.search);
-                            const url= window.location.href.split('?')[0];
-
-                            const error = urlParams.get('error');
-                            const mensajeError = document.querySelector('.mensaje-error');
-
-                            // PASO 2: Lógica modificada
-                            if (error) {
-                                const pElementoError = document.getElementById('texto-error');
-                                
-                                pElementoError.textContent = decodeURIComponent(error);
-
-                                mensajeError.classList.add('open');
-                            }
-                            
-                            function cerrarVentana() {
-                                window.history.replaceState({}, document.title, url);
-                                mensajeError.classList.remove('open');
-                            }
-                        </script>
                     </section>
                 </section>
             </form> </section>

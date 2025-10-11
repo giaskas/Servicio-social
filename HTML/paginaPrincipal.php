@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['usuario'])) {
+    header('Location: ../HTML/login.html');
+    exit;
+}
+
+?>
 <!DOCTYPE html>
 <html lang="es-MX">
   <head>
@@ -6,6 +14,8 @@
     <title>Sistema de Gestión de Archivos - UAQ</title>
     <link rel="stylesheet" href="../CSS/estilosPaginaPrincipal.css" />
     <script src="../JS/funciones.js" defer></script>
+    <script src="../JS/alertas.js" defer></script>
+
   </head>
   <body>
     <header class="topbar" role="banner">
@@ -19,7 +29,7 @@
 
       <div class="topbar_right">
         <div class="user-mini" aria-label="Usuario actual">
-          <img class="user-mini_avatar" src="../Icons/user.png" alt="Avatar" width="24" height="24" />
+          <img class="user-mini_avatar" src="../Icons/user.p-ng" alt="Avatar" width="24" height="24" />
           <div class="user-mini_data">
             <span class="user-mini_name">Dr. María González</span>
             <span class="user-mini_role">Administrador</span>
@@ -85,29 +95,11 @@
                 <section class="mensaje-error">
                     <section class="mensaje">
                         <p id="texto-error"></p>
-                        
+
+
                         <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
                             <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
                         </button>
-                        <script>
-                            const urlParams = new URLSearchParams(window.location.search);
-                            const error = urlParams.get('error');
-                            const url= window.location.href.split('?')[0];
-                            const mensajeError = document.querySelector('.mensaje-error');
-                            if (error) {
-                                const pElementoError = document.getElementById('texto-error');
-                                
-                                pElementoError.textContent = decodeURIComponent(error);
-
-                                mensajeError.classList.add('open');
-                            }
-                            
-                            function cerrarVentana() {
-                                window.history.replaceState({}, document.title, url);
-
-                                mensajeError.classList.remove('open');
-                            }
-                        </script>
                     </section>
                 </section>
       <form class="toolbar_right" id="search-form" role="search">
@@ -119,7 +111,7 @@
         </select>
       </form>
     </section>
-
+    
     <main id="main" role="main">
       <section class="card" aria-labelledby="historial-title">
         <div class="card_header">

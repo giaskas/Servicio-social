@@ -1,5 +1,6 @@
 <?php
 include '../PHP/conexion.php';
+
 $nombre = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
 $consulta = "SELECT IdUsuario, ContrasenaConHash FROM usuarios WHERE Nombre = ?";
@@ -17,7 +18,7 @@ if ($resultado) {
             session_start();
             $_SESSION['usuario'] = $nombre;
             session_regenerate_id(true);
-            header("Location: ../HTML/paginaPrincipal.html");
+            header("Location: ../HTML/paginaPrincipal.php");
             exit(); 
         } else {
            

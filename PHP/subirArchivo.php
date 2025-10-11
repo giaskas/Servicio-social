@@ -26,17 +26,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         } else {
             $error = urlencode("Tipo de archivo no permitido. Solo se permiten archivos XLSX, XLS y CSV.");
-            header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+            header("Location: ../HTML/paginaPrincipal.php?error=" . $error);
             exit();
         }
     } else {
         $error = urlencode("Error al subir el archivo. Código de error: " . $_FILES['archivo']['error']);
-        header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+        header("Location: ../HTML/paginaPrincipal.php?error=" . $error);
         exit();
     }
 } else {
     $error = urlencode("Método de solicitud no permitido.");
-    header("Location: ../HTML/paginaPrincipal.html?error=" . $error);
+    header("Location: ../HTML/paginaPrincipal.php?error=" . $error);
     exit();
 }
 
