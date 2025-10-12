@@ -2,16 +2,19 @@ Crear Tabla usuarios
 
 CREATE TABLE usuarios (
     IdUsuario INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    Nombre VARCHAR(255) NOT NULL
-    ContrasenaConHash VARCHAR(255) NOT NULL
+    Nombre VARCHAR(255) NOT NULL UNIQUE
+    ContrasenaConHash VARCHAR(255) NOT NULL 
+    Rol VARCHAR(255) NOT NULL
 );
-
+ContrasenaConHash tiene que ser con MD5
 Crear Tabla archivos 
 
 CREATE TABLE archivos (
     IdArchivo INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	Nombre VARCHAR(255),	
     Archivo BLOB
+    fecha_creacion timestamp 
+
 );
 
 Crear Tabla registros

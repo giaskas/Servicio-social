@@ -1,9 +1,6 @@
 <?php
 include '../PHP/paginaProtegida.php';
-
 ?>
-
-
 <!DOCTYPE html>
 <html lang="es-MX">
   <head>
@@ -13,7 +10,6 @@ include '../PHP/paginaProtegida.php';
     <link rel="stylesheet" href="../CSS/estilosPaginaPrincipal.css" />
     <script src="../JS/funciones.js" defer></script>
     <script src="../JS/alertas.js" defer></script>
-
   </head>
   <body>
     <header class="topbar" role="banner">
@@ -24,37 +20,29 @@ include '../PHP/paginaProtegida.php';
             <p class="header_subtitle">Universidad Autónoma de Querétaro</p>
           </div> 
       </div>
-
       <div class="topbar_right">
         <div class="user-mini" aria-label="Usuario actual">
           <img class="user-mini_avatar" src="../Icons/user.png" alt="Avatar" />
           <div class="user-mini_data">
             <span class="user-mini_name"><?php echo $_SESSION['usuario']; ?></span>
             <span class="user-mini_role"><?php echo $_SESSION['rol']; ?></span>
-
           </div>
         </div>
         <form action="../PHP/cerrarSesion.php" method="POST">
           <button class="btn-logout" id="logout" type="submit">
-            
             <img class="img-logout" id="logout" type="button" src="../Icons/logout.png" alt="Cerrar sesión" width="20"/>
           </button>
         </form>
       </div>
-       
-      </div>
-      </div>
-    </header>
-    
-    
+    </div>
+    </header>  
     <section class="toolbar" aria-label="Acciones principales">
       <div class="toolbar_left">
-            <button class="btn-primary" onclick="abrirVentanaUploader()" id="upload" type="button">
-            <img src="../Icons/upload.png" id="icon-upload" alt="Subir archivo" width="20" height="20" />
-            <span>Subir archivo</span>
+          <button class="btn-primary" onclick="abrirVentanaUploader()" id="upload" type="button">
+          <img src="../Icons/upload.png" id="icon-upload" alt="Subir archivo" width="20" height="20" />
+          <span>Subir archivo</span>
         </button>
         </div>
-      
       </div>
       <script>
         function abrirVentanaUploader() {
@@ -68,40 +56,32 @@ include '../PHP/paginaProtegida.php';
       </script>
       <section class="busqueda-archivos" role="dialog" aria-labelledby="titulo-uploader">
           <div class="uploader">
-              <h1 class="uploader__title" id="titulo-uploader">Abrir un archivo</h1>
-              <button class="uploader__close" id="close-uploader" aria-label="Cerrar ventana de subida de archivos" onclick="cerrarVentanaUploader()">
-                  <img src="../Icons/cross.png" alt="Cerrar" width="15" height="15"/>
-              </button>
-              
-              <form action="../PHP/subirArchivo.php" method="POST" enctype="multipart/form-data">
-
-                  <div id="dropzone" class="uploader__drop">
-                      <input id="file-input" class="file-input" type="file" name="archivo" accept=".xlsx, .xls, .csv" required />
-                      <div id="file-names" class="uploader__names">No se ha seleccionado ningún archivo</div>
-                      <label for="file-input" class="btn-archivo" id="btn-examinar">Examinar</label>
-                      <p class="uploader__hint">o arrastra aquí un archivo</p>
-                  </div>
-          
-                  <div class="uploader__actions">
-                      <button id="btn-subir" type="submit" class="boton btn-subir" disabled>Generar PDF</button>
-                  </div>
-
-              </form>
+            <h1 class="uploader__title" id="titulo-uploader">Abrir un archivo</h1>
+            <button class="uploader__close" id="close-uploader" aria-label="Cerrar ventana de subida de archivos" onclick="cerrarVentanaUploader()">
+              <img src="../Icons/cross.png" alt="Cerrar" width="15" height="15"/>
+            </button>
+            <form action="../PHP/subirArchivo.php" method="POST" enctype="multipart/form-data">
+              <div id="dropzone" class="uploader__drop">
+                <input id="file-input" class="file-input" type="file" name="archivo" accept=".xlsx, .xls, .csv" required />
+                <div id="file-names" class="uploader__names">No se ha seleccionado ningún archivo</div>
+                <label for="file-input" class="btn-archivo" id="btn-examinar">Examinar</label>
+                <p class="uploader__hint">o arrastra aquí un archivo</p>
+              </div>          
+              <div class="uploader__actions">
+                <button id="btn-subir" type="submit" class="boton btn-subir" disabled>Generar PDF</button>
               </div>
+            </form>
+          </div>
       </section>
-
-                <section class="mensaje-error">
-                    <section class="mensaje">
-                        <p id="texto-error"></p>
-
-
-                        <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
-                            <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
-                        </button>
-                    </section>
-                </section>
+      <section class="mensaje-error">
+          <section class="mensaje">
+            <p id="texto-error"></p>
+            <button class="btn-cerrar" onclick="cerrarVentana()" type="button">
+              <img class="img-cerrar" src="../Icons/cross.png" alt="Cerrar" width="15"/>
+            </button>
+          </section>
+      </section>
       <form class="toolbar_right" id="search-form" role="search">
-
         <label for="ordenar" >Ordenar por</label>
         <select id="ordenar" name="sort">
           <option value="fecha" selected>Fecha</option>
@@ -109,14 +89,12 @@ include '../PHP/paginaProtegida.php';
         </select>
       </form>
     </section>
-    
     <main id="main" role="main">
       <section class="card" aria-labelledby="historial-title">
         <div class="card_header">
           <span class="icon-folder" aria-hidden="true"></span>
           <h2 id="historial-title">Historial de Archivos</h2>
         </div>
-
         <div class="card_body">
           <div class="table-responsive">
             <table class="table">
