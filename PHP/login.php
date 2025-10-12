@@ -3,7 +3,7 @@ include '../PHP/conexion.php';
 
 $nombre = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
-$consulta = "SELECT IdUsuario, ContrasenaConHash FROM usuarios WHERE Nombre = ?";
+$consulta = "SELECT IdUsuario, ContrasenaConHash, Rol FROM usuarios WHERE Nombre = ?";
 $resultado = $conexion->prepare($consulta);
 if ($resultado) {
     $resultado->bind_param("s", $nombre);
@@ -13,10 +13,13 @@ if ($resultado) {
         $fila = $resultado->fetch_assoc();  
         $hash_almacenado = $fila['ContrasenaConHash'];
         $hash_ingresado = md5($contrasena);
+        $rol = $fila['Rol'];
 
         if ($hash_ingresado === $hash_almacenado) {
             session_start();
             $_SESSION['usuario'] = $nombre;
+            $_SESSION['rol'] = $rol;
+
             session_regenerate_id(true);
             header("Location: ../HTML/paginaPrincipal.php");
             exit(); 

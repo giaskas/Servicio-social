@@ -1,11 +1,12 @@
 <?php
-session_start();
+include '../PHP/paginaProtegida.php';
 if (!isset($_SESSION['usuario'])) {
-    header('Location: ../HTML/login.html');
-    exit;
+    header("Location: ../HTML/login.html");
+    exit();
 }
-
 ?>
+
+
 <!DOCTYPE html>
 <html lang="es-MX">
   <head>
@@ -29,10 +30,10 @@ if (!isset($_SESSION['usuario'])) {
 
       <div class="topbar_right">
         <div class="user-mini" aria-label="Usuario actual">
-          <img class="user-mini_avatar" src="../Icons/user.p-ng" alt="Avatar" width="24" height="24" />
+          <img class="user-mini_avatar" src="../Icons/user.png" alt="Avatar" />
           <div class="user-mini_data">
-            <span class="user-mini_name">Dr. María González</span>
-            <span class="user-mini_role">Administrador</span>
+            <span class="user-mini_name"><?php echo $_SESSION['usuario']; ?></span>
+            <span class="user-mini_role"><?php echo $_SESSION['rol']; ?></span>
 
           </div>
         </div>
@@ -130,64 +131,8 @@ if (!isset($_SESSION['usuario'])) {
                   <th scope="col" class="col--acciones">Acciones</th>
                 </tr>
               </thead>
-
               <tbody id="files-tbody">
-                <tr class="fila" data-id="1">
-                  <td class="cell-file">
-                    <img src="../Icons/file-pdf.png" alt="Icono de archivo PDF" width="20" height="20"/>
-                    <div class="file-meta">
-                      <span class="file-name">recibo_cfe.pdf</span>
-                      <span class="file-size">0.3 MB</span>
-                    </div>
-                  </td>
-
-                  <td class="cell-date">
-                    <img src="../Icons/calendar.png" alt="Icono de calendario" width="20" height="20"/>
-                    <time datetime="2025-08-24T14:06:32">24/8/2025, 2:06:32 p.m.</time>
-                  </td>
-                  <td class="cell-user">
-                    <img src="../Icons/user.png" alt="Icono de usuario" width="15" height="15"/>
-                    <span>Dr. María González</span>
-                  </td>
-                  <td class="cell-actions">
-                    <button class="btn-icon" data-action="preview" aria-label="Ver archivo">
-                      <img src="../Icons/eye.png" alt="Ver archivo" width="15" height="15"/>
-                    </button>
-
-                    <button class="btn-icon" data-action="download" aria-label="Descargar archivo">
-                      <img src="../Icons/download.png" alt="Descargar archivo" width="15" height="15"/>
-                    </button>
-                  </td>   
-                </tr>
-              </tbody>
-              <tbody id="files-tbody">
-                <tr class="fila" data-id="1">
-                  <td class="cell-file">
-                    <img src="../Icons/file-pdf.png" id="icon-file" alt="Icono de archivo PDF" width="20" height="20"/>
-                    <div class="file-meta">
-                      <span class="file-name">recibo_cfe.pdf</span>
-                      <span class="file-size">0.3 MB</span>
-                    </div>
-                  </td>
-
-                  <td class="cell-date">
-                    <img src="../Icons/calendar.png" id="icon-calendar" alt="Icono de calendario" width="20" height="20"/>
-                    <time datetime="2025-08-24T14:06:32">24/8/2025, 2:06:32 p.m.</time>
-                  </td>
-                  <td class="cell-user">
-                    <img src="../Icons/user.png" alt="Icono de usuario" width="15" height="15"/>
-                    <span>Dr. María González</span>
-                  </td>
-                  <td class="cell-actions">
-                    <button class="btn-icon" data-action="preview" aria-label="Ver archivo">
-                      <img src="../Icons/eye.png" alt="Ver archivo" width="15" height="15"/>
-                    </button>
-
-                    <button class="btn-icon" data-action="download" aria-label="Descargar archivo">
-                      <img src="../Icons/download.png" alt="Descargar archivo" width="15" height="15"/>
-                    </button>
-                  </td>   
-                </tr>
+                <?php include '../PHP/mostrarArchivos.php'; ?>
               </tbody>
             </table>
           </div>
