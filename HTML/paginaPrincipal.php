@@ -1,9 +1,6 @@
 <?php
 include '../PHP/paginaProtegida.php';
-if (!isset($_SESSION['usuario'])) {
-    header("Location: ../HTML/login.html");
-    exit();
-}
+
 ?>
 
 
