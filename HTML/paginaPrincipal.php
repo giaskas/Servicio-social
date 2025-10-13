@@ -107,7 +107,7 @@ include '../PHP/paginaProtegida.php';
                 </tr>
               </thead>
               <tbody id="files-tbody">
-                <?php include '../PHP/mostrarArchivos.php'; ?>
+                <?php include '../PHP/historialArchivos.php'; ?>
               </tbody>
             </table>
           </div>
@@ -138,5 +138,16 @@ include '../PHP/paginaProtegida.php';
         </td>
       </tr>
     </template>
+    <div id="modal-visualizador" class="modal-contenedor" style="display: none;">
+    <div class="modal-contenido">
+        <div class="modal-header">
+            <h2 id="modal-titulo">Nombre del Archivo</h2>
+            <button id="modal-cerrar" class="btn-cerrar">&times;</button>
+        </div>
+        <div class="modal-body">
+            <iframe id="modal-iframe" src="about:blank" frameborder="0"></iframe>
+        </div>
+    </div>
+</div>
   </body>
 </html>
