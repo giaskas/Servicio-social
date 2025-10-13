@@ -1,19 +1,19 @@
 <?php
-// visualizacionPDF.php
+
 declare(strict_types=1);
 
-// *** Asegúrate de NO tener BOM ni espacios antes de esta línea ***
-ini_set('display_errors', '0'); // evita romper el PDF con notices en producción
+
+ini_set('display_errors', '0'); 
 error_reporting(E_ALL);
 
 require __DIR__ . '/conexion.php';
 
-// Si tu app usa sesiones en otras partes, libérala para no bloquear mientras servimos bytes
+// liberamos la sesion para que no aiga pedos
 if (session_status() === PHP_SESSION_ACTIVE) {
     session_write_close();
 }
 
-// 1) Parámetros
+// asignamos las variables
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 $accion = isset($_GET['accion']) ? strtolower(trim((string)$_GET['accion'])) : 'ver'; // 'ver' | 'descargar'
 $esDescarga = ($accion === 'descargar');
@@ -24,8 +24,6 @@ if (!$id || $id <= 0) {
     echo "Solicitud inválida: parámetro 'id'.";
     exit;
 }
-
-// 2) Consulta segura: traemos nombre y BLOB
 $sql = "SELECT nombre, Archivo
         FROM archivos
         WHERE IdArchivo = ?
@@ -39,7 +37,7 @@ if (!$stmt) {
     echo "Error interno.";
     exit;
 }
-
+//buscamos el rchivo
 $stmt->bind_param('i', $id);
 $stmt->execute();
 $stmt->store_result();
@@ -55,8 +53,7 @@ if ($stmt->num_rows === 0) {
 $stmt->bind_result($nombre, $blob);
 $stmt->fetch();
 $stmt->close();
-
-// 3) Validaciones del BLOB
+//validamos el blob
 if ($blob === null || $blob === '') {
     error_log("visualizacionPDF: BLOB vacío para id=$id");
     http_response_code(500);
@@ -65,7 +62,7 @@ if ($blob === null || $blob === '') {
     exit;
 }
 
-// si accidentalmente guardaste base64, decodifica (heurística ligera)
+//compara si los primeros 4 bytes es PDF y si es base64
 $first4 = substr($blob, 0, 4);
 if ($first4 !== '%PDF' && preg_match('/^[A-Za-z0-9+\/=\r\n]+$/', $blob)) {
     $decoded = base64_decode($blob, true);
@@ -83,22 +80,21 @@ if (strtolower(pathinfo($nombre, PATHINFO_EXTENSION)) !== 'pdf') {
     $nombre .= '.pdf';
 }
 
-// 4) Limpia cualquier buffer antes de headers
+// limpia cualquier buffer antes de headers
 while (ob_get_level() > 0) { ob_end_clean(); }
 
-// 5) Cabeceras base
+// cabeceras base, son para mandar a visualizar el pdf
 header('X-Content-Type-Options: nosniff');
 header('Cache-Control: private, max-age=0, no-store, no-cache, must-revalidate');
 header('Pragma: no-cache');
 header('Content-Type: application/pdf');
 header('Accept-Ranges: bytes');
-
+//ya todo esto no sabo para q es
 $disposition = $esDescarga ? 'attachment' : 'inline';
 $filenameSafe = str_replace(['"', "\r", "\n"], ['\'', '', ''], $nombre);
 $filenameStar = rawurlencode($nombre);
 header("Content-Disposition: {$disposition}; filename=\"{$filenameSafe}\"; filename*=UTF-8''{$filenameStar}");
 
-// 6) HTTP Range (parcial) para que el visor de Chrome funcione bien
 $range = $_SERVER['HTTP_RANGE'] ?? null;
 $start = 0;
 $end   = $size - 1;
@@ -121,7 +117,6 @@ if ($range && preg_match('/bytes=(\d*)-(\d*)/i', $range, $m)) {
     exit;
 }
 
-// 7) Respuesta completa
 header('Content-Length: ' . (string)$size);
 http_response_code(200);
 echo $blob;

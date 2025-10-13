@@ -1,11 +1,9 @@
-// uploader.js
 (function () {
   const fileInput = document.getElementById('file-input');
   const dropzone  = document.getElementById('dropzone');
   const namesBox  = document.getElementById('file-names');
   const btnSubir  = document.getElementById('btn-subir');
 
-  // Helpers
   const fmtSize = (bytes) => {
     if (bytes === 0 || isNaN(bytes)) return '0 B';
     const k = 1024, units = ['B','KB','MB','GB','TB'];
@@ -55,7 +53,6 @@
   dropzone?.addEventListener('drop', (e) => {
     const dt = e.dataTransfer;
     if (!dt || !dt.files?.length) return;
-    // Asigna el archivo dropped al input real
     const file = dt.files[0];
     const dataTransfer = new DataTransfer();
     dataTransfer.items.add(file);

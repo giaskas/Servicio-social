@@ -1,38 +1,19 @@
 <?php
 
-
-
-
-
-
-
-
-    //todo esto lo hice con chatgpt realmente esaba muy cabron y nadie decia bien como hacerlo lol
-    //todo lo que tiene que ver con el modal, que es lo de visualizar el pdf, como ni si quiera lo podia imprimir por la variable esa de la base de datos
-    //me desespere y cai en las tentasiones
-
-
-
-
-
-
-
-
     include '../PHP/conexion.php';
-    // CAMBIO 1: Modificamos la consulta. NO necesitamos traer el contenido binario (`Archivo`).
-    // Es muy pesado y lento. Solo necesitamos el 'id' para construir el enlace.
+//hacemos la consulta
     $consulta = "SELECT IdArchivo, nombre, DATE_FORMAT(fecha_creacion, '%Y-%m-%d %H:%i') as fecha_creacion FROM archivos";
     $resultado = $conexion->query($consulta);
 
     if ($resultado->num_rows > 0) {
-
+        //asignamos las consultas en variables
         while ($fila = $resultado->fetch_assoc()) {
-            // CAMBIO 2: Obtenemos el ID del archivo.
             $idArchivo = $fila['IdArchivo'];
             $nombreArchivo = $fila['nombre'];
             $fechaCreacion = $fila['fecha_creacion'];
-            // $archivoBinario = $fila['Archivo']; // <-- Ya no necesitamos esta línea aquí.
-?>
+            //imprimimos la tabla de los arcihvos
+?>          
+            
             <tr class="fila">
                 <td class="cell-file">
                     <img src="../Icons/file-pdf.png" id="icon-file" alt="Icono de archivo PDF" width="20" height="20" />
@@ -63,10 +44,11 @@
                 </td>
             </tr>
 <?php
-        } // Fin del while
+        } 
     } else {
         echo "<tr><td colspan='4'>No se encontraron archivos.</td></tr>";
     }
+    //el html de la ventana del pdf
 ?>
 
 <section class="visualizacion" role="dialog" id="modal-visualizador">
@@ -81,46 +63,41 @@
     </div>
 </section>
 
+
 <script>document.addEventListener('DOMContentLoaded', function() {
-    
-    // 1. Obtener referencias a los elementos del DOM
+    //asignamos las clases a variables
     const modal = document.getElementById('modal-visualizador');
     const modalTitulo = document.getElementById('modal-titulo');
     const modalIframe = document.getElementById('modal-iframe');
     const btnCerrar = document.getElementById('modal-cerrar');
     
-    // La tabla donde están los botones
     const cuerpoTabla = document.querySelector('tbody');
 
-    // 2. Función para abrir el modal
     function abrirModal(id, nombre) {
-        console.log(`Abriendo archivo ID: ${id}, Nombre: ${nombre}`); // Para depurar
+        console.log(`Abriendo archivo ID: ${id}, Nombre: ${nombre}`); 
+        
         const urlArchivo = `../PHP/visualizacionPDF.php?id=${id}`;
         
-        // Actualizamos los contenidos del modal
+        // insertamos la visualizacion del archivo dentro del modal
         modalTitulo.textContent = nombre;
         modalIframe.src = urlArchivo;
         
-        // ¡La magia para mostrarlo! Añadimos la clase .open
         modal.classList.add('open');
     }
 
-    // 3. Función para cerrar el modal
     function cerrarModal() {
-        // Le quitamos la clase .open para ocultarlo
         modal.classList.remove('open');
-        // Limpiamos el iframe
         modalIframe.src = 'about:blank';
     }
 
-    // 4. Escuchar los clics en TODA la tabla
+    //escuchar los clics en toda la tabla
     if (cuerpoTabla) {
         cuerpoTabla.addEventListener('click', function(event) {
-            // Buscamos si el clic se hizo en un botón con la clase 'btn-ver'
+            // Buscamos si el clic se hizo en el boton de ver
             const botonVer = event.target.closest('.btn-ver');
             
             if (botonVer) {
-                // Si se encontró el botón, obtenemos sus datos y abrimos el modal
+                //mostramos el modal
                 const id = botonVer.dataset.id;
                 const nombre = botonVer.dataset.nombre;
                 abrirModal(id, nombre);
@@ -128,11 +105,11 @@
         });
     }
 
-    // 5. Asignar el evento de cierre al botón X y al fondo
+    // asignar el evento de cierre al boton de x y fuera del cuadro
     btnCerrar.addEventListener('click', cerrarModal);
 
     modal.addEventListener('click', function(event) {
-        // Si el clic fue directamente en el fondo oscuro, también se cierra
+        // si el clic fue directamente en el fondo oscuro, también se cierra
         if (event.target === modal) {
             cerrarModal();
         }

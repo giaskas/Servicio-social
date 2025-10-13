@@ -1,4 +1,5 @@
 <?php
+    //cierra sesiones para que no puedan entrar a la pagina principal sin iniciar sesion
     session_start();
     $_SESSION = [];
     session_destroy();
