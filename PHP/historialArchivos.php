@@ -46,7 +46,9 @@
 <?php
         } 
     } else {
-        echo "<tr><td colspan='4'>No se encontraron archivos.</td></tr>";
+        echo "<tr><td colspan='4'><center>
+            <br><br><br><br>No se encontraron archivos.<br><br><br><br><br>
+            </center></td></tr>";
     }
     //el html de la ventana del pdf
 ?>
