@@ -1,25 +1,69 @@
 <?php
-
     include '../PHP/conexion.php';
-//hacemos la consulta
-    $consulta = "SELECT IdArchivo, nombre, DATE_FORMAT(fecha_creacion, '%Y-%m-%d %H:%i') as fecha_creacion FROM archivos";
-    $resultado = $conexion->query($consulta);
+    
+    if (session_status() === PHP_SESSION_NONE) {
+        session_start();
+    }
+    
+    $nombreUsuarioSesion = $_SESSION['usuario'];
+
+    $modo = $_GET['modo'] ?? 'propios';
+
+    //hacemos la consulta
+    if ($modo === 'todos') {
+
+        $consulta = "SELECT 
+                a.IdArchivo,
+                a.Nombre AS NombreArchivo,
+                DATE_FORMAT(r.Fecha, '%Y-%m-%d') AS FechaCreacion,
+                u.Nombre AS NombreUsuario
+            FROM Archivos a
+            JOIN registro r ON a.IdArchivo = r.IdArchivo
+            JOIN usuarios u ON r.IdUsuario = u.IdUsuario
+            ORDER BY r.Fecha DESC";
+
+        $stmt = $conexion->prepare($consulta);
+        if (!$stmt) die('Error prepare: ' . $conexion->error);
+
+        $stmt->execute();
+
+    } else {
+
+        $consulta = "SELECT 
+                        a.IdArchivo,
+                        a.Nombre AS NombreArchivo,
+                        DATE_FORMAT(r.Fecha, '%Y-%m-%d') AS FechaCreacion,
+                        u.Nombre AS NombreUsuario
+                    FROM Archivos a
+                    JOIN registro r ON a.IdArchivo = r.IdArchivo
+                    JOIN usuarios u ON r.IdUsuario = u.IdUsuario
+                    WHERE u.Nombre = ?
+                    ORDER BY r.Fecha DESC";
+
+        $stmt = $conexion->prepare($consulta);
+        if (!$stmt) die('Error prepare: ' . $conexion->error);
+
+        $stmt->bind_param("s", $nombreUsuarioSesion);
+        $stmt->execute();
+    }
+
+    $resultado = $stmt->get_result();
 
     if ($resultado->num_rows > 0) {
         //asignamos las consultas en variables
         while ($fila = $resultado->fetch_assoc()) {
-            $idArchivo = $fila['IdArchivo'];
-            $nombreArchivo = $fila['nombre'];
-            $fechaCreacion = $fila['fecha_creacion'];
-            //imprimimos la tabla de los arcihvos
+            $idArchivo = (int)$fila['IdArchivo'];
+            $nombreArchivo = $fila['NombreArchivo'];
+            $fechaCreacion = $fila['FechaCreacion'];
+            $nombreUsuario = $fila['NombreUsuario'];
 ?>          
-            
+  
             <tr class="fila">
                 <td class="cell-file">
                     <img src="../Icons/file-pdf.png" id="icon-file" alt="Icono de archivo PDF" width="20" height="20" />
                     <div class="file-meta">
                         <span class="file-name"><?php echo htmlspecialchars($nombreArchivo); ?></span>
-                        <span class="file-size">0.3 MB</span>
+                        <!--<span class="file-size">0.3 MB</span>-->
                     </div>
                 </td>
                 <td class="cell-date">
@@ -28,7 +72,7 @@
                 </td>
                 <td class="cell-user">
                     <img src="../Icons/user.png" alt="Icono de usuario" width="15" height="15" />
-                    <span class="user-name">Alberto</span>
+                    <span class="user-name"><?php echo htmlspecialchars($nombreUsuario); ?></span>
                 </td>
                 <td class="cell-actions">
                     <button class="btn-icon btn-ver" 
@@ -50,7 +94,8 @@
             <br><br><br><br>No se encontraron archivos.<br><br><br><br><br>
             </center></td></tr>";
     }
-    //el html de la ventana del pdf
+    $stmt->close();
+    $conexion->close();
 ?>
 
 <section class="visualizacion" role="dialog" id="modal-visualizador">

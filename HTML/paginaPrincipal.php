@@ -16,7 +16,7 @@ include '../PHP/paginaProtegida.php';
       <div class="topbar_left">
           <img src="../Icons/logoUaq.png" alt="Logo UAQ" width="32" height="32" />
           <div class="header_text">
-            <h1 class="header_title">Sistema de Gestión de Archivos</h1>
+            <h1 class="header_title">Sistema de Generación de Solicitudes Electronicas</h1>
             <p class="header_subtitle">Universidad Autónoma de Querétaro</p>
           </div> 
       </div>
@@ -82,10 +82,14 @@ include '../PHP/paginaProtegida.php';
           </section>
       </section>
       <form class="toolbar_right" id="search-form" role="search">
-        <label for="ordenar" >Ordenar por</label>
-        <select id="ordenar" name="sort">
-          <option value="fecha" selected>Fecha</option>
-          <option value="usuario">Usuario</option>
+        <label for="ordenar">Filtrar por</label>
+        <select id="modo" name="modo" onchange="this.form.submit()">
+            <option value="propios" <?php if(($_GET['modo'] ?? 'propios') === 'propios') echo 'selected'; ?>>
+                Mis archivos
+            </option>
+            <option value="todos" <?php if(($_GET['modo'] ?? '') === 'todos') echo 'selected'; ?>>
+                Todos
+            </option>
         </select>
       </form>
     </section>

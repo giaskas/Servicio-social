@@ -3,19 +3,20 @@ include '../PHP/conexion.php';
 
 $nombre = $_POST['usuario'];
 $contrasena = $_POST['contrasena'];
-$consulta = "SELECT IdUsuario, ContrasenaConHash, Rol FROM usuarios WHERE Nombre = ?";
+$consulta = "SELECT IdUsuario, Contrasena, Rol FROM usuarios WHERE Nombre = ?";
 $resultado = $conexion->prepare($consulta);
+
 if ($resultado) {
     $resultado->bind_param("s", $nombre);
     $resultado->execute();
     $resultado = $resultado->get_result();
+
     if ($resultado->num_rows === 1) {
         $fila = $resultado->fetch_assoc();  
-        $hash_almacenado = $fila['ContrasenaConHash'];
-        $hash_ingresado = md5($contrasena);
+        $contrasena_almacenado = $fila['Contrasena'];
         $rol = $fila['Rol'];
 
-        if ($hash_ingresado === $hash_almacenado) {
+        if ($contrasena === $contrasena_almacenado) {
             session_start();
             $_SESSION['usuario'] = $nombre;
             $_SESSION['rol'] = $rol;
@@ -24,7 +25,6 @@ if ($resultado) {
             header("Location: ../HTML/paginaPrincipal.php");
             exit(); 
         } else {
-           
             $error = urlencode("Contraseña incorrecta");
             header("Location: ../HTML/login.html?error=" . $error);
             exit();

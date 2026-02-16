@@ -1,6 +1,5 @@
 <?php
 
-
 /*Para instalar las dependencias de FPDI Y FPDF es necesario modificar el PHP.INI
     y quitar el punto y coma de las siguientes dependencias 
     panelel de control de XAMPP -> PHP -> php.ini
@@ -10,17 +9,14 @@
 function pdf_text($s) {
     $s = (string)$s;
 
-    // Limpieza típica de CSV/Excel (Â y NBSP)
-    $s = str_replace(["\xC2\xA0", "Â"], " ", $s);  // NBSP + símbolo raro
+    
+    $s = str_replace(["\xC2\xA0", "Â"], " ", $s); 
     $s = preg_replace('/\s+/u', ' ', $s);
     $s = trim($s);
 
-    // Si viene en UTF-8, conviértelo a ISO-8859-1 para FPDF.
-    // Si ya viene en ISO-8859-1/Win-1252, no lo rompas.
     $enc = mb_detect_encoding($s, ['UTF-8', 'Windows-1252', 'ISO-8859-1'], true);
 
     if ($enc === 'UTF-8') {
-        // IGNORE evita reventar por caracteres que no existen en Latin-1
         $s = iconv('UTF-8', 'ISO-8859-1//TRANSLIT//IGNORE', $s);
     }
 
@@ -76,17 +72,58 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             }
 
             // BORRAR ARCHIVO TEMPORAL
-            if (file_exists($fileTmpPath)) {
-                unlink($fileTmpPath);
-            }
+            $spreadsheet->disconnectWorksheets();
+            unset($spreadsheet);
 
+            clearstatcache();
+
+            if (is_file($tempFullPath)) {
+                if (!unlink($tempFullPath)) {
+                    error_log("No se pudo borrar temp: $tempFullPath");
+                }
+            }
             //CREAR RUTA PARA PDF
             $pdfDir = '../Files/pdf/';
             if (!is_dir($pdfDir)) {
                 mkdir($pdfDir, 0755, true);
             }
+        
+            //BUSCAR ID DEL ULTIMO DOCUMENTO
+            include '../PHP/conexion.php';
 
-            $pdfFileName = 'NORM_' . $baseName . '_' . $stampName . '.pdf';
+            $tablaArchivos = 'archivos';
+
+            $sqlcount = "SELECT COUNT(*) FROM $tablaArchivos";
+
+            $stmt = $conexion->prepare($sqlcount);
+                if (!$stmt) {
+                    die("Error prepare: " . $conexion->error);
+                }
+
+            $stmt->execute();
+            $stmt->bind_result($totalRegistros);
+            $stmt->fetch();
+            $stmt->close();
+
+            if ($totalRegistros == 0) {
+                $idArchivo = 210;
+            } else {
+                $sqlid = "SELECT MAX(IdArchivo) FROM $tablaArchivos";
+                $stmt = $conexion->prepare($sqlid);
+                if (!$stmt) {
+                    die("Error prepare: " . $conexion->error);
+                }
+
+                $stmt->execute();
+                $stmt->bind_result($max_id);
+                $stmt->fetch();
+                $stmt->close();
+
+                $idArchivo = ((int)$max_id) + 1;
+            }
+
+
+            $pdfFileName = 'Oficio No.'.$idArchivo.'.pdf';
             $pdfFullPath = $pdfDir . $pdfFileName;
 
             if (file_exists($pdfFullPath)) {
@@ -119,12 +156,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             $pdf->SetFont('Arial','',11);
             $pdf->Cell(180, $hLine, "Campus Juriquilla, $dia de $mes de $anio", 0, 1, 'R');
-            $pdf->Cell(180, $hLine, "REF: SADFI/oficio No. 292/$anio", 0, 1, 'R');
+            $pdf->Cell(180, $hLine, "REF: SADFI/oficio No. $idArchivo/$anio", 0, 1, 'R');
             $pdf->Ln(4);
 
             // Destinatario
             $pdf->SetFont('Arial','B',11);
             $pdf->SetX($indent);
+
+            // C A M B I O//
             $pdf->Cell($wText, $hLine, "MTRO. ARTEMIO SOTOMAYOR OLMEDO", 0, 1, 'L');
             $pdf->SetX($indent);
             $pdf->Cell($wText, $hLine, "DIRECTOR DE RECURSOS HUMANOS", 0, 1, 'L');
@@ -152,7 +191,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     "CLAVE",
                     "PERIODO CORRESPONDIENTE A PAGAR",
                     "FECHA DE PAGO",
-                    "TIPO DE NÓMINA",
+                    utf8_decode("TIPO DE NÓMINA"),
                     "SOLICITUD DE GASTO",
                     "IMPORTE",
                 ));
@@ -255,24 +294,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             //GUARDAR RUTA EN BASE DE DATOS
             $pdfPathDB = 'Files/pdf/' . $pdfFileName;
 
-            include '../PHP/conexion.php';
-            
-            $sql = "INSERT INTO Archivos (Nombre, Archivo, Fecha_Creacion)
-                        VALUES (?, ?, NOW())";
-
-            $stmt = $conexion->prepare($sql);
+            //OBTENER ID DEL USUARIO
+            session_start();
+            $usuario = $_SESSION['usuario'];
+            $sqlUsuario = "SELECT IdUsuario FROM usuarios WHERE Nombre = ?";
+            $stmt = $conexion->prepare($sqlUsuario);
                 if (!$stmt) {
                     die("Error prepare: " . $conexion->error);
                 }
 
-            session_start();
-            $idUsuario = $_SESSION['idusuario'];
+            $stmt->bind_param("s", $usuario);
+            $stmt->execute();
+            $stmt->bind_result($idUsuario);
+            $stmt->fetch();
+            $stmt->close();
+
+            $sqlArchivo = "INSERT INTO archivos (IdArchivo, Nombre, Archivo)
+                            VALUES ($idArchivo, ?, ?)";
+
+            $stmt = $conexion->prepare($sqlArchivo);
+                if (!$stmt) {
+                    die("Error prepare: " . $conexion->error);
+                }
 
             $stmt->bind_param("ss", $pdfFileName, $pdfPathDB);
-
             $stmt->execute();
-
             $stmt->close();
+
+            $sqlHistorial = "INSERT INTO registro (IdUsuario, IdArchivo, Fecha)
+                        VALUES (?, ?, NOW())";
+
+            $stmt = $conexion->prepare($sqlHistorial);    
+            $stmt->bind_param("ii", $idUsuario, $idArchivo);
+            $stmt->execute();
+        
 
             $conexion->close();
 
